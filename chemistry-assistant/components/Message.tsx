@@ -14,8 +14,8 @@ export default function Message({ role, content }: Props) {
         className={`
           max-w-2xl px-4 py-3 rounded-2xl
           ${isUser 
-            ? "bg-[#2f2f2f] text-white" 
-            : "bg-[#3a3a3a] text-white"}
+            ? "bg-blue-500 text-white" 
+            : "bg-gray-200 text-black"}
         `}
       >
         <ReactMarkdown>{content}</ReactMarkdown>
