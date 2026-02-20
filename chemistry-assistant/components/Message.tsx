@@ -6,13 +6,20 @@ interface Props {
 }
 
 export default function Message({ role, content }: Props) {
+  const isUser = role === "user";
+
   return (
-    <div className={`p-3 rounded-lg max-w-[80%] ${
-      role === "user"
-        ? "bg-blue-500 text-white self-end"
-        : "bg-gray-200 text-black self-start"
-    }`}>
-      <ReactMarkdown>{content}</ReactMarkdown>
+    <div className={`flex w-full ${isUser ? "justify-end" : "justify-start"}`}>
+      <div
+        className={`
+          max-w-2xl px-4 py-3 rounded-2xl
+          ${isUser 
+            ? "bg-[#2f2f2f] text-white" 
+            : "bg-[#3a3a3a] text-white"}
+        `}
+      >
+        <ReactMarkdown>{content}</ReactMarkdown>
+      </div>
     </div>
   );
 }
