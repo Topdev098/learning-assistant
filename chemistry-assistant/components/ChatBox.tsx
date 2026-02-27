@@ -12,18 +12,37 @@ interface MessageType {
 export default function ChatBox() {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [loading, setLoading] = useState(false);
+  const [isAtBottom, setIsAtBottom] = useState(true);
 
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
+  // Detect if user is near bottom
+  const handleScroll = () => {
+    const container = scrollRef.current;
+    if (!container) return;
+
+    const threshold = 50; // px from bottom
+    const isBottom =
+      container.scrollHeight - container.scrollTop - container.clientHeight <
+      threshold;
+
+    setIsAtBottom(isBottom);
+  };
+
+  // Auto-scroll only if user is at bottom
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages]);
+    if (isAtBottom) {
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages, isAtBottom]);
 
   const sendMessage = async (text: string) => {
     const newMessages: MessageType[] = [
       ...messages,
       { role: "user", content: text },
     ];
+
     setMessages(newMessages);
     setLoading(true);
 
@@ -54,15 +73,22 @@ export default function ChatBox() {
   };
 
   return (
-    <div className="w-150 h-[80vh] bg-white shadow-lg rounded-xl flex flex-col">
-      <div className="flex-1 overflow-y-auto p-4 space-y-4">
+    <div className="w-[600px] h-[80vh] bg-white shadow-lg rounded-xl flex flex-col">
+      {/* Messages Area */}
+      <div
+        ref={scrollRef}
+        onScroll={handleScroll}
+        className="flex-1 overflow-y-auto p-4 space-y-4"
+      >
         {messages.map((msg, index) => (
           <Message key={index} role={msg.role} content={msg.content} />
         ))}
 
+        {/* Invisible Scroll Target */}
         <div ref={messagesEndRef} />
       </div>
 
+      {/* Input */}
       <InputBox onSend={sendMessage} disabled={loading} />
     </div>
   );
