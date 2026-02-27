@@ -73,7 +73,7 @@ export default function ChatBox() {
   };
 
   return (
-    <div className="w-[600px] h-[80vh] bg-white shadow-lg rounded-xl flex flex-col">
+    <div className="w-150 h-[80vh] bg-white shadow-lg rounded-xl flex flex-col">
       {/* Messages Area */}
       <div
         ref={scrollRef}
