@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import Message from "./Message";
 import InputBox from "./InputBox";
 
@@ -13,8 +13,17 @@ export default function ChatBox() {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
   const sendMessage = async (text: string) => {
-    const newMessages: MessageType[] = [...messages, { role: "user", content: text }];
+    const newMessages: MessageType[] = [
+      ...messages,
+      { role: "user", content: text },
+    ];
     setMessages(newMessages);
     setLoading(true);
 
@@ -50,6 +59,8 @@ export default function ChatBox() {
         {messages.map((msg, index) => (
           <Message key={index} role={msg.role} content={msg.content} />
         ))}
+
+        <div ref={messagesEndRef} />
       </div>
 
       <InputBox onSend={sendMessage} disabled={loading} />
