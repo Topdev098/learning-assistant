@@ -71,12 +71,12 @@ export default function ChatBox() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen text-gray-900 dark:text-gray-100 transition-colors duration-300">
       {/* Messages Area */}
       <div
         ref={scrollRef}
         onScroll={handleScroll}
-        className="flex-1 overflow-y-auto"
+        className="flex-1 overflow-y-auto bg-gray-100 dark:bg-gray-900 transition-colors duration-300"
       >
         <div className="max-w-3xl mx-auto px-4 py-6 space-y-6">
           {messages.map((msg, index) => (
@@ -87,8 +87,8 @@ export default function ChatBox() {
         </div>
       </div>
 
-      {/* Input Fixed Bottom */}
-      <div className="border-t bg-white">
+      {/* Input Area */}
+      <div className="border-t bg-white dark:bg-gray-800 dark:border-gray-700 transition-colors duration-300">
         <div className="max-w-3xl mx-auto">
           <InputBox onSend={sendMessage} disabled={loading} />
         </div>
