@@ -10,29 +10,25 @@ export default function Message({ role, content }: Props) {
 
   return (
     <div className="w-full flex">
-      {/* Assistant Layout */}
+      {/* Assistant */}
       {!isUser && (
         <div className="flex w-full items-start gap-3">
-          {/* 🤖 Avatar */}
-           🤖         
+          <div className="text-xl">🤖</div>
 
-          {/* Message Bubble */}
-          <div className="max-w-2xl px-4 py-3 rounded-2xl bg-gray-200 text-black">
+          <div className="max-w-[75%] px-4 py-3 rounded-2xl bg-gray-200 text-black dark:bg-gray-700 dark:text-white transition">
             <ReactMarkdown>{content}</ReactMarkdown>
           </div>
         </div>
       )}
 
-      {/* User Layout */}
+      {/* User */}
       {isUser && (
         <div className="flex w-full justify-end items-start gap-3">
-          {/* Message Bubble */}
-          <div className="max-w-2xl px-4 py-3 rounded-2xl bg-blue-500 text-white">
+          <div className="max-w-[75%] px-4 py-3 rounded-2xl bg-gray-200 text-black dark:bg-gray-700 dark:text-white transition">
             <ReactMarkdown>{content}</ReactMarkdown>
           </div>
 
-          {/* 👤 Avatar */}
-            👤
+          <div className="text-xl">👤</div>
         </div>
       )}
     </div>
